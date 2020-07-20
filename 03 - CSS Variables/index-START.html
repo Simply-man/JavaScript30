@@ -63,6 +63,16 @@
 
   <script>
 
+    const constrolsInput = document.querySelectorAll(".controls input");
+
+    function update() {
+      const suffix = this.dataset.sizing || "";
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix)
+    }
+
+    constrolsInput.forEach(item => item.addEventListener("change", update));
+    constrolsInput.forEach(item => item.addEventListener("mousemove", update));
+
   </script>
 
 </body>
