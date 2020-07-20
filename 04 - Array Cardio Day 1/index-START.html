@@ -31,25 +31,71 @@
 
     const people = ['Beck, Glenn', 'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester', 'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano', 'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle', 'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose', 'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black Elk', 'Blair, Robert', 'Blair, Tony', 'Blake, William'];
 
+    // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const invetorsSort = inventors.filter(inventor => inventor.year >= 1500 && inventor.year <= 1599);
+    console.table(invetorsSort);
 
+    // Array.prototype.map()
     // 2. Give us an array of the inventor first and last names
+    const fullName = inventors.map(inventor => inventor.first + " " + inventor.last)
+    console.table(fullName);
 
+    // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    const brithday = inventors.sort((a, b) => { return a.year - b.year });
+    console.table(brithday)
 
+    // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
+    const year = inventors.reduce((acc, curr) => { return acc + (curr.passed - curr.year) }, 0);
+    console.log(year);
+
+    // Array.prototype.sort()
+    // 5. Sort the inventors by years lived
+    const yearsLived = inventors.sort((a, b) => {
+      const firstGuy = a.passed - a.year;
+      const secondGuy = b.passed - b.year;
+      return firstGuy > secondGuy ? -1 : 1;
+    })
+
+    console.table(yearsLived);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
+    // const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    // const url = "https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris";
+    // fetch(proxyurl + url)
+    //   .then(res => res)
+    //   .catch(err => console.log(err));
+    // const mw = document.querySelectorAll(".mw-category-group a");
+    // Array.from(mw).map(item => item.text).filter(de => de.includes("de"))
+
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    const alphabetically = people.sort((a, b) => {
+      const [aFirst, aLast] = a.split(", ");  // Destructuring
+      const [bFirst, bLast] = b.split(", "); // Destructuring
+      return a.last < b.last ? -1 : 1
+    });
 
-
+    console.table(alphabetically)
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
+    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck', 'pogostick'];
+
+    const instance = data.reduce((acc, curr) => {
+      if (!acc[curr]) {
+        acc[curr] = 0;
+      }
+      acc[curr]++
+
+      return acc
+    }, {});
+    console.log(instance);
 
   </script>
 </body>
