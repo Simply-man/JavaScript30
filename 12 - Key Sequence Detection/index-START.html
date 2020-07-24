@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Key Detection</title>
   <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
 </head>
+
 <body>
-<script>
-</script>
+  <script>
+
+    const getLetters = [];
+    const secretCode = "JS30";
+
+    window.addEventListener("keyup", (e) => {
+      getLetters.push(e.key);
+      getLetters.splice(-secretCode.length - 1, getLetters.length - secretCode.length);
+      console.log(getLetters);
+      if (getLetters.join("").includes(secretCode)) {
+        console.log("MonkaS");
+        cornify_add();
+      }
+    })
+  </script>
 </body>
+
 </html>
