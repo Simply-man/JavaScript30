@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Videos</title>
 </head>
+
 <body>
   <ul class="videos">
     <li data-time="5:43">
@@ -181,7 +183,28 @@
       Video 58
     </li>
   </ul>
-<script>
-</script>
+  <script>
+    const data = [...document.querySelectorAll("[data-time]")];
+    // My implementation with only reduce method.
+    const time = data.reduce((acc, cur, index) => {
+      // destructing array ES6 Features
+      const [min, sec] = cur.dataset.time.split(":").map(parseFloat)
+      // const eachTimeMin = cur.dataset.time.split(":")[0];
+      // const eachTimeSec = cur.dataset.time.split(":")[1];
+      return acc + (min * 60) + sec
+    }, 0);
+
+    let timeLeft = time;
+    hours = Math.floor(timeLeft / 3600);
+
+    timeLeft = timeLeft % 3600;
+    mins = Math.floor(timeLeft / 60);
+
+    timeLeft = timeLeft % 60;
+    seconds = Math.floor(timeLeft);
+
+    console.log(hours, mins, seconds);
+  </script>
 </body>
+
 </html>
