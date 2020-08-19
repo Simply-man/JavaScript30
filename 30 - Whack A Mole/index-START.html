@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Whack A Mole!</title>
   <link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <h1>Whack-a-mole! <span class="score">0</span></h1>
+  <span class="time-left">Time left: 0 seconds.</span>
   <button onClick="startGame()">Start!</button>
 
   <div class="game">
@@ -32,11 +35,68 @@
     </div>
   </div>
 
-<script>
-  const holes = document.querySelectorAll('.hole');
-  const scoreBoard = document.querySelector('.score');
-  const moles = document.querySelectorAll('.mole');
+  <script>
+    const holes = document.querySelectorAll('.hole');
+    const scoreBoard = document.querySelector('.score');
+    const moles = document.querySelectorAll('.mole');
+    const timeLeft = document.querySelector(".time-left");
 
-</script>
+    let lastHole;
+    let timeEnd = false;
+    let score = 0;
+    let timeout;
+
+    function randomTime(min, max) {
+      return Math.round(Math.random() * (min + max) + min);
+    }
+
+    function randomHole(holes) {
+      const index = Math.floor(Math.random() * holes.length);
+      const hole = holes[index];
+      if (lastHole === hole) {
+        console.log("Same hole dude...");
+        return randomHole(holes)
+      }
+      lastHole = hole;
+      return hole;
+    }
+
+    function showMole() {
+      const show = randomHole(holes);
+      show.classList.add("up");
+      setTimeout(() => {
+        show.classList.remove("up");
+        if (!timeEnd) showMole();
+      }, randomTime(100, 800));
+    }
+
+    function startGame() {
+      let time = 10;
+      displaTimeLeft(time);
+      showMole();
+      score = 0;
+      timeEnd = false;
+      setTimeout(() => timeEnd = true, time * 1000)
+      timeout = setInterval(() => {
+        time--;
+        displaTimeLeft(time);
+        console.log(time)
+        if (time === 0) clearInterval(timeout)
+      }, time * 100)
+    }
+
+    function displaTimeLeft(time) {
+      timeLeft.textContent = `Time left: ${time} seconds.`;
+    }
+    function catchMole(e) {
+      if (!e.isTrusted) return;
+      score += 1;
+      scoreBoard.textContent = score;
+    }
+
+    moles.forEach(mole => mole.addEventListener("click", catchMole));
+
+  </script>
 </body>
+
 </html>
